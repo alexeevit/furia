@@ -33,13 +33,13 @@ module Furia
           @root_scope[:total_queries_num] += 1
         end
 
-      yield
-
-      if parent_scope
-        parent_scope[:total_duration_ms] += @current_scope[:total_duration_ms]
-        @current_scope = parent_scope
-      else
-        Furia::Sample.create!(data: @root_scope)
+      yield.tap do
+        if parent_scope
+          parent_scope[:total_duration_ms] += @current_scope[:total_duration_ms]
+          @current_scope = parent_scope
+        else
+          Furia::Sample.create!(data: @root_scope)
+        end
       end
     ensure
       ActiveSupport::Notifications.unsubscribe(subscriber)
