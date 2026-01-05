@@ -1,0 +1,36 @@
+<% if entry.is_a?(Furia::Query) %>
+  <div class="accordion accordion-single font-monospace">
+    <div class="accordion-item">
+      <h2 class="accordion-header">
+        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#query-<%= entry.uid %>">
+          <small>
+            [<span class="text-success"><%= entry.duration_ms.floor(2) %>ms</span>]
+            <% if entry.cached %>
+              [<span class="text-secondary">CACHED</span>]
+            <% end %>
+            <span>
+              <code class="language-sql bg-transparent"><%= entry.sql %></code>
+            </span>
+          </small>
+        </button>
+      </h2>
+
+      <div id="query-<%= entry.uid %>" class="accordion-collapse collapse">
+        <div class="accordion-body">
+          <small>
+            Stacktrace:
+            <ul>
+              <% entry.stacktrace.each do |line| %>
+                <li><%= line %></li>
+              <% end %>
+            </ul>
+          </small>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+
+<% if entry.is_a?(Furia::Group) %>
+  <%= render "group", group: entry %>
+<% end %>

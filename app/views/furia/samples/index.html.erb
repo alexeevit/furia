@@ -1,0 +1,38 @@
+<h2 class="my-4">All Samples</h2>
+
+<% if @samples.any? %>
+  <table class="table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Scope</th>
+        <th>Total Duration</th>
+        <th>Queries number</th>
+        <th>Created</th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @samples.each do |sample| %>
+        <tr>
+          <td><%= sample.id %></td>
+          <td><%= sample.root_group.scope %></td>
+          <td><%= sample.root_group.total_duration_ms.floor(2) %>ms</td>
+          <td><%= sample.root_group.total_queries_num %></td>
+          <td><%= l sample.created_at, format: :short %></td>
+          <td>
+            <%= link_to "View", sample_path(sample) %>
+            &nbsp;
+            <%= link_to "Destroy", sample_path(sample), class: "text-danger", data: { confirm: "Are you sure you want to destroy this sample?", method: "DELETE" } %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <div class="card">
+    <div class="card-body text-center">
+      Nothing yet ¯\_(ツ)_/¯
+    </div>
+  </div>
+<% end %>

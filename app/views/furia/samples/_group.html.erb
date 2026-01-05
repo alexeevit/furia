@@ -1,0 +1,11 @@
+<div class="entries">
+  <button class="scope-label" data-bs-toggle="collapse" data-bs-target="#scope-<%= group.uid %>">
+    <%= group.scope %> [<%= group.total_duration_ms.floor(2) %>ms]
+  </button>
+
+  <div class="collapse show" id="scope-<%= group.uid %>">
+    <% group.entries.each do |entry| %>
+      <%= render "entry", entry: entry %>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,3 @@
+<h2 class="my-4">Sample #<%= @sample.id %> from <%= l @sample.created_at, format: :short %></h2>
+
+<%= render "group", group: @sample.root_group %>
